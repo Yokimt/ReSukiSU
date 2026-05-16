@@ -1,21 +1,22 @@
 use crate::android::btf::BtfStruct;
 use object::{ObjectSection, SymbolSection};
-use object::{Endianness,Object, ObjectSymbol, read::elf::ElfFile64};
+use object::{Endianness, Object, ObjectSymbol, read::elf::ElfFile64};
 use regex_lite::Regex;
-use std::fs;
+use std::{fs, path::Path};
 pub struct ModulePatcher {
     btf: BtfStruct,
     data: Vec<u8>,
 }
 
 impl ModulePatcher {
-    pub fn new(btf_path: &str, elf_path: &str) -> Self {
+    pub fn new<P: AsRef<Path>, Q: AsRef<Path>>(btf_path: P, elf_path: Q) -> Self {
         Self {
             btf: BtfStruct::init(btf_path),
-            data: fs::read(elf_path).unwrap(),
+            data: fs::read(elf_path.as_ref()).unwrap(),
         }
     }
-    pub fn patch_elf(&self, outpath: &str) -> Result<(), String>  {
+    pub fn patch_elf<P: AsRef<Path>>(&self, outpath: P) -> Result<(), String> {
+        let outpath = outpath.as_ref();
         let mut patched_data = self.data.clone();
         let elf = ElfFile64::<Endianness>::parse(&*self.data).map_err(|e| format!("ELF 解析失败: {}", e))?;
         let re = Regex::new(r"^(.+?)__((?:[^_]+(?:_[^_]+)*?)?)__offset$").map_err(|e| format!("正则编译失败: {}", e))?;
@@ -81,7 +82,7 @@ impl ModulePatcher {
         println!(
             "成功修补 {} 个偏移符号，输出: {}",
             requirements.len(),
-            outpath
+            outpath.display()
         );
         Ok(())
     }

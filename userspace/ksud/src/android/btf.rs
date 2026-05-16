@@ -1,12 +1,13 @@
 use btf_rs::{Btf, BtfType, Type};
+use std::path::Path;
 pub struct BtfStruct {
     btf: Btf,
 }
 
 impl BtfStruct {
-    pub fn init(path: &str) -> Self {
+    pub fn init<P: AsRef<Path>>(path: P) -> Self {
         BtfStruct {
-            btf: Btf::from_file(path).expect("btf初始化失败"),
+            btf: Btf::from_file(path.as_ref()).expect("btf初始化失败"),
         }
     }
     pub fn get_member_offset(&self, struct_name: &str, member_name: &str) -> Result<u32, String> {

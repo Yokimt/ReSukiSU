@@ -560,13 +560,11 @@ private suspend fun handleModuleInstall(
             shell.newJob().add("mkdir -p /data/adb/kpm").exec()
             shell.newJob().add("cp ${tempFile.absolutePath} $targetPath").exec()
         }
-        if(isEmbed==2)
-        {
-            val loadResult = loadKpmModule(tempFile.absolutePath,"btf")
-        }
-        else
-        {
-            val loadResult = loadKpmModule(tempFile.absolutePath)
+        
+        val loadResult = if (isEmbed == 2) {
+            loadKpmModule(tempFile.absolutePath, "btf")
+        } else {
+            loadKpmModule(tempFile.absolutePath)
         }
         
         if (loadResult.startsWith("Error")) {

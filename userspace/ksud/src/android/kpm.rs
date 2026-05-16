@@ -15,12 +15,13 @@ pub fn load_module<P>(path: P, args: Option<&str>) -> Result<()>
 where
     P: AsRef<Path>,
 {
-    let path_str = path.as_ref().to_string_lossy();
+    let path_ref = path.as_ref();
+    let path_str = path_ref.to_string_lossy();
     if matches!(args, Some("btf")) {
-        let module = ModulePatcher::new("/sys/kernel/btf/vmlinux", &path_str);
-        module.patch_elf(&path_str).map_err(|e| anyhow::anyhow!(e))?;
+        let module = ModulePatcher::new("/sys/kernel/btf/vmlinux", path_ref);
+        module.patch_elf(path_ref).map_err(|e| anyhow::anyhow!(e))?;
     }
-    let path = CString::new(path_str.as_ref())?;
+    let path = CString::new(path_str.to_string())?;
     let args = args.map_or_else(|| CString::new(String::new()), CString::new)?;
 
     let mut ret = -1;
