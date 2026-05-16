@@ -4,7 +4,6 @@ use std::{
     os::unix::fs::PermissionsExt,
     path::Path,
 };
-use 
 use anyhow::{Result, bail};
 
 use crate::android::ksucalls::ksuctl;
