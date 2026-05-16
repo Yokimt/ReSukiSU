@@ -125,6 +125,7 @@ fun KpmPage(bottomPadding: Dp) {
     val kpmUninstallFailed = stringResource(R.string.kpm_uninstall_failed)
     val kpmInstallMode = stringResource(R.string.kpm_install_mode)
     val kpmInstallModeLoad = stringResource(R.string.kpm_install_mode_load)
+    val kpmInstallModeBtf = stringResource(R.string.kpm_install_mode_btf)
     val kpmInstallModeEmbed = stringResource(R.string.kpm_install_mode_embed)
     val invalidFileTypeMessage = stringResource(R.string.invalid_file_type)
     val confirmTitle = stringResource(R.string.confirm_uninstall_title_with_filename)
@@ -184,7 +185,7 @@ fun KpmPage(bottomPadding: Dp) {
                                     tempFileForInstall?.let { tempFile ->
                                         handleModuleInstall(
                                             tempFile = tempFile,
-                                            isEmbed = false,
+                                            isEmbed = 0,
                                             viewModel = viewModel,
                                             snackBarHost = snackBarHost,
                                             kpmInstallSuccess = kpmInstallSuccess,
@@ -205,7 +206,6 @@ fun KpmPage(bottomPadding: Dp) {
                             )
                             Text(kpmInstallModeLoad)
                         }
-
                         Button(
                             onClick = {
                                 scope.launch {
@@ -213,7 +213,35 @@ fun KpmPage(bottomPadding: Dp) {
                                     tempFileForInstall?.let { tempFile ->
                                         handleModuleInstall(
                                             tempFile = tempFile,
-                                            isEmbed = true,
+                                            isEmbed = 2,
+                                            viewModel = viewModel,
+                                            snackBarHost = snackBarHost,
+                                            kpmInstallSuccess = kpmInstallSuccess,
+                                            kpmInstallFailed = kpmInstallFailed
+                                        )
+                                    }
+                                    tempFileForInstall = null
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Download,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(18.dp)
+                                    .padding(end = 4.dp)
+                            )
+                            Text(kpmInstallModeBtf)
+                        }
+                        Button(
+                            onClick = {
+                                scope.launch {
+                                    dismiss()
+                                    tempFileForInstall?.let { tempFile ->
+                                        handleModuleInstall(
+                                            tempFile = tempFile,
+                                            isEmbed = 1,
                                             viewModel = viewModel,
                                             snackBarHost = snackBarHost,
                                             kpmInstallSuccess = kpmInstallSuccess,
@@ -491,7 +519,7 @@ fun KpmPage(bottomPadding: Dp) {
 
 private suspend fun handleModuleInstall(
     tempFile: File,
-    isEmbed: Boolean,
+    isEmbed: Int,
     viewModel: KpmViewModel,
     snackBarHost: SnackbarHostState,
     kpmInstallSuccess: String,
@@ -527,13 +555,20 @@ private suspend fun handleModuleInstall(
     val targetPath = "/data/adb/kpm/$moduleId.kpm"
 
     try {
-        if (isEmbed) {
+        if (isEmbed==1) {
             val shell = getRootShell()
             shell.newJob().add("mkdir -p /data/adb/kpm").exec()
             shell.newJob().add("cp ${tempFile.absolutePath} $targetPath").exec()
         }
-
-        val loadResult = loadKpmModule(tempFile.absolutePath)
+        if(isEmbed==2)
+        {
+            val loadResult = loadKpmModule(tempFile.absolutePath,"btf")
+        }
+        else
+        {
+            val loadResult = loadKpmModule(tempFile.absolutePath)
+        }
+        
         if (loadResult.startsWith("Error")) {
             Log.e("KsuCli", "Failed to load KPM module: $loadResult")
             snackBarHost.showSnackbar(

@@ -203,6 +203,7 @@
     <string name="custom_settings">Pengaturan kostum</string>
     <string name="kpm_install_mode">Instalasi KPM</string>
     <string name="kpm_install_mode_load">Muat</string>
+    <string name="kpm_install_mode_btf">BTF Muat</string>
     <string name="kpm_install_mode_embed">Sematkan</string>
     <string name="kpm_install_mode_description">Silakan pilih: %1\$s Mode Instalasi Modul \n\nMuat: Memuat sementara modul \nSematkan: Menginstal secara permanen ke dalam sistem</string>
     <string name="snackbar_failed_to_check_module_file">Gagal memeriksa keberadaan file modul</string>

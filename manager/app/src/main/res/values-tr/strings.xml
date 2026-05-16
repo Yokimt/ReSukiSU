@@ -266,6 +266,7 @@
     <string name="custom_settings">Özel ayarlar</string>
     <string name="kpm_install_mode">KPM Yükleme</string>
     <string name="kpm_install_mode_load">Yükle</string>
+    <string name="kpm_install_mode_btf">BTF Yükle</string>
     <string name="kpm_install_mode_embed">Göm</string>
     <string name="kpm_install_mode_description">Lütfen seçin: %1$s Modül Yükleme Modu \n\nYükle: Modülü geçici olarak yükle \nGömülü: Kalıcı olarak sisteme yükle</string>
     <string name="snackbar_failed_to_check_module_file">Modül dosyasının varlığını kontrol edilemiyor</string>

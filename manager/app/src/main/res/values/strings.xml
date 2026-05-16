@@ -287,6 +287,7 @@
     <string name="custom_settings">Custom settings</string>
     <string name="kpm_install_mode">KPM Install</string>
     <string name="kpm_install_mode_load">Load</string>
+    <string name="kpm_install_mode_btf">BTF Load</string>
     <string name="kpm_install_mode_embed">Embed</string>
     <string name="kpm_install_mode_description">Please select: %1\$s Module Installation Mode \n\nLoad: Temporarily load the module \nEmbedded: Permanently install into the system</string>
     <string name="snackbar_failed_to_check_module_file">Unable to check if module file exists</string>

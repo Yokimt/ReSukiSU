@@ -191,6 +191,7 @@
     <string name="kernel_not_enabled">Kernel no configurado</string>
     <string name="custom_settings">Ajustes personalizados</string>
     <string name="kpm_install_mode_load">Cargar</string>
+    <string name="kpm_install_mode_btf">BTF Cargar</string>
     <string name="kpm_install_mode_embed">Insertar</string>
     <string name="kpm_install_mode_description">Por favor seleccione: %1\$s Modo de instalación del Módulo \n\nCarga: Cargar temporalmente el módulo \nInsertar: Instalar permanentemente en el sistema</string>
     <string name="snackbar_failed_to_check_module_file">No se puede comprobar si el archivo de módulo existe</string>

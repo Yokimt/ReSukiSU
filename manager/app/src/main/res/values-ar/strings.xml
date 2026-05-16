@@ -196,6 +196,7 @@
     <string name="kernel_not_enabled">لم يتم تكوين النواة</string>
     <string name="custom_settings">الإعدادات المُخصصة</string>
     <string name="kpm_install_mode_load">التحميل</string>
+    <string name="kpm_install_mode_btf">BTF التحميل</string>
     <string name="kpm_install_mode_embed">فسيفساء</string>
     <string name="kpm_install_mode_description">الرجاء التحديد: %1\$s وضع تثبيت الوحدة \n\nالتحميل: قم بتحميل الوحدة \nمؤقتا: تثبيت دائم في النظام</string>
     <string name="snackbar_failed_to_check_module_file">غير قادر على التحقق من وجود ملف الوحدة</string>

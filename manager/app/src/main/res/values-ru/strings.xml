@@ -270,6 +270,7 @@
     <string name="custom_settings">Персонализация</string>
     <string name="kpm_install_mode">Установка KPM</string>
     <string name="kpm_install_mode_load">Загрузить</string>
+    <string name="kpm_install_mode_btf">BTF Загрузить</string>
     <string name="kpm_install_mode_embed">Код для вставки</string>
     <string name="kpm_install_mode_description">Пожалуйста, выберите %1\$s режим установки модуля \n\nЗагрузить: Временно загрузить модуль \nВстроенный: Окончательно установить в систему</string>
     <string name="snackbar_failed_to_check_module_file">Не удалось проверить наличие файла модуля</string>

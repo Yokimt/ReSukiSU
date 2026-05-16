@@ -4,19 +4,24 @@ use std::{
     os::unix::fs::PermissionsExt,
     path::Path,
 };
-
+use 
 use anyhow::{Result, bail};
 
 use crate::android::ksucalls::ksuctl;
 use crate::ksu_uapi;
-
+use crate::android::patch_elf::ModulePatcher;
 const KPM_DIR: &str = "/data/adb/kpm";
 
 pub fn load_module<P>(path: P, args: Option<&str>) -> Result<()>
 where
     P: AsRef<Path>,
 {
-    let path = CString::new(path.as_ref().to_string_lossy().to_string())?;
+    let path_str = path.as_ref().to_string_lossy();
+    if matches!(args, Some("btf")) {
+        let module = ModulePatcher::new("/sys/kernel/btf/vmlinux", &path_str);
+        module.patch_elf(&path_str).map_err(|e| anyhow::anyhow!(e))?;
+    }
+    let path = CString::new(path_str.as_ref())?;
     let args = args.map_or_else(|| CString::new(String::new()), CString::new)?;
 
     let mut ret = -1;

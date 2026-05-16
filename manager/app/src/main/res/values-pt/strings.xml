@@ -193,6 +193,7 @@
     <string name="custom_settings">Configurações personalizadas</string>
     <string name="kpm_install_mode">KPM Install</string>
     <string name="kpm_install_mode_load">Carga</string>
+    <string name="kpm_install_mode_btf">BTF Carga</string>
     <string name="kpm_install_mode_embed">Embutir</string>
     <string name="kpm_install_mode_description">Por favor seleccione: %1\$s Modo de instalación del Módulo \n\nCarga: Cargar temporalmente el módulo \nInsertar: Instalar permanentemente en el sistema</string>
     <string name="snackbar_failed_to_check_module_file">Não foi possível verificar se o arquivo do módulo existe</string>

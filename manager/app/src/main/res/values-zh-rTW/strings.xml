@@ -270,6 +270,7 @@
     <string name="custom_settings">個人化設定</string>
     <string name="kpm_install_mode">安裝</string>
     <string name="kpm_install_mode_load">載入</string>
+    <string name="kpm_install_mode_btf">BTF載入</string>
     <string name="kpm_install_mode_embed">嵌入</string>
     <string name="kpm_install_mode_description">請選擇：%1\$s 模組的安裝模式\n\n載入：臨時載入模組\n嵌入：永久安裝至系統</string>
     <string name="snackbar_failed_to_check_module_file">無法檢查模組檔案是否存在</string>

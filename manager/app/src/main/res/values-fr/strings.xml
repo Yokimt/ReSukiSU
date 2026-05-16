@@ -188,6 +188,7 @@
     <string name="custom_settings">Paramètres personnalisés</string>
     <string name="kpm_install_mode">KPM Installé</string>
     <string name="kpm_install_mode_load">Charger</string>
+    <string name="kpm_install_mode_btf">BTF Charger</string>
     <string name="kpm_install_mode_embed">Intégrer</string>
     <string name="kpm_install_mode_description">Veuillez sélectionner : %1\$s Mode d\'installation du module \n\nCharge : Chargez temporairement le module \nIntégré: Installez définitivement dans le système</string>
     <string name="snackbar_failed_to_check_module_file">Impossible de vérifier si le fichier du module existe</string>

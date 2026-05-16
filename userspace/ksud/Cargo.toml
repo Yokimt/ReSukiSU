@@ -22,7 +22,8 @@ chrono = "0.4"
 regex-lite = "0.1"
 android-bootimg = { git = "https://github.com/5ec1cff/android_bootimg" }
 memmap2 = "0.9.10"
-
+btf-rs = "2.0.0"
+object =  { version = "0.39.1", features = ["read", "write", "elf"] }
 [target.'cfg(target_os = "android")'.dependencies]
 rustix = { version = "=1.1.4", default-features = false, features = ["process", "thread", "fs", "system", "stdio"] }
 android-properties = { version = "0.2", features = ["bionic-deprecated"] }

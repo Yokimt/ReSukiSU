@@ -214,6 +214,7 @@ Lanjutkan?</string>
     <string name="custom_settings">Pengaturan Khusus</string>
     <string name="kpm_install_mode">Pemasangan KPM</string>
     <string name="kpm_install_mode_load">Muat</string>
+    <string name="kpm_install_mode_btf">BTF Muat</string>
     <string name="kpm_install_mode_embed">Tanamkan</string>
     <string name="kpm_install_mode_description">Silakan pilih: %1$s mode pemasangan modul
 Muat: Secara sementara memuat modul

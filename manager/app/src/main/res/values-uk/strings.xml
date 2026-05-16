@@ -196,6 +196,7 @@
     <string name="custom_settings">Власні налаштування</string>
     <string name="kpm_install_mode">Встановлення KPM</string>
     <string name="kpm_install_mode_load">Завантажити</string>
+    <string name="kpm_install_mode_btf">BTF Завантажити</string>
     <string name="kpm_install_mode_embed">Вбудувати</string>
     <string name="kpm_install_mode_description">Будь ласка, оберіть: %1$s режим встановлення модуля \n\nЗавантажити: Тимчасово завантажити модуль \nВбудувати: Постійно встановити в систему</string>
     <string name="snackbar_failed_to_check_module_file">Не вдалося перевірити існування файлу модуля</string>
