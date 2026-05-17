@@ -48,6 +48,16 @@
 
 - 基于 KernelPatch 开发，移除了与 KernelSU 重复的功能。
 - 正在进行（WIP）：通过集成附加功能来扩展 APatch 兼容性，以确保跨不同实现的兼容性。
+- BTF支持
+使用/data/adb/ksud kernel dynamic-manager set-apk  /path/to/your.apk 使内核能够接受新管理器apk的签名(因为没有官方的签名）
+编译kpm模块时可以使用下面的宏，在初始化时自动填充成员偏移。
+
+```c
+// BTF解析偏移宏
+#define BTF_OFFSET_VAR(struct_name, member_name) \
+    unsigned long struct_name##__##member_name##__offset \
+        __attribute__((used, section(".data"))) = 0
+```
 
 **开源仓库**: [https://github.com/ShirkNeko/SukiSU_KernelPatch_patch](https://github.com/ShirkNeko/SukiSU_KernelPatch_patch)
 
