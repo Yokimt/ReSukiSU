@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [                
+                "./",
+                "../.kp",
+                "../.kp/Kernel/include",
+                "../.kp/Kernel/patch/include",
+                "../.kp/Kernel/linux/include",
+                "../.kp/Kernel/linux/arch/arm64/include",
+                "../.kp/Kernel/linux/tools/arch/arm64/include",
+                "../.kp/Kernel/linux/tools/arch/arm64/include/asm",
+                "../.kp/kernel/patch/"
+            ],
+            "compilerPath": "C:/Users/Administrator/AppData/Local/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/bin/aarch64-linux-android31-clang.cmd",
+            "intelliSenseMode": "linux-clang-arm64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}

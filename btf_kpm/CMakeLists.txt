@@ -1,0 +1,107 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(apps LANGUAGES C)
+
+# 设置KP_DIR
+if(NOT DEFINED KP_DIR)
+    set(KP_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
+
+# 默认使用无调试信息的 Release 构建。
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+set(CMAKE_C_FLAGS_RELEASE "-DNDEBUG -g0" CACHE STRING "Release flags" FORCE)
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "-DNDEBUG -g0" CACHE STRING "RelWithDebInfo flags" FORCE)
+
+# 设置全局包含目录
+set(KERNEL_INCLUDE_DIRS
+        .
+        include
+        patch/include
+        linux/include
+        linux/arch/arm64/include
+        linux/tools/arch/arm64/include
+)
+
+# 创建全局包含目录列表
+set(GLOBAL_INCLUDE_DIRS "")
+foreach(dir ${KERNEL_INCLUDE_DIRS})
+    list(APPEND GLOBAL_INCLUDE_DIRS "${KP_DIR}/.kp/kernel/${dir}")
+endforeach()
+
+# 定义通用的KPM模块构建函数
+function(add_kpm_module MODULE_NAME)
+    # 解析可选参数
+    set(options "")
+    set(oneValueArgs LINKER_SCRIPT)
+    set(multiValueArgs SOURCES)
+    cmake_parse_arguments(KPM "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    # 获取源文件列表 - 支持旧格式(直接列出源文件)和新格式(SOURCES 关键字)
+    if(KPM_SOURCES)
+        set(SOURCE_FILES ${KPM_SOURCES})
+    elseif(KPM_UNPARSED_ARGUMENTS)
+        set(SOURCE_FILES ${KPM_UNPARSED_ARGUMENTS})
+    else()
+        message(FATAL_ERROR "add_kpm_module: No source files specified for ${MODULE_NAME}")
+    endif()
+
+    # 创建目标文件
+    add_library(${MODULE_NAME}_obj OBJECT ${SOURCE_FILES})
+
+    # 设置包含目录
+    target_include_directories(${MODULE_NAME}_obj PRIVATE ${GLOBAL_INCLUDE_DIRS})
+
+    # 设置编译选项
+    target_compile_options(${MODULE_NAME}_obj PRIVATE
+        -Os
+        -fno-stack-protector
+        -fno-builtin
+        -nostdinc
+        -fno-PIC
+        -mno-outline-atomics
+        -mcmodel=large
+        -fno-asynchronous-unwind-tables
+        -fno-unwind-tables
+    )
+
+
+    # 获取 linker 路径
+    if(NOT DEFINED KPM_LINKER)
+        if(CMAKE_LINKER)
+            set(KPM_LINKER ${CMAKE_LINKER})
+        else()
+            set(KPM_LINKER ld)
+        endif()
+    endif()
+
+    add_custom_target(${MODULE_NAME}.kpm ALL
+            # 直接使用 linker 进行 -r 链接
+            COMMAND ${KPM_LINKER} -r -o ${MODULE_NAME}.kpm "$<TARGET_OBJECTS:${MODULE_NAME}_obj>"
+            DEPENDS ${MODULE_NAME}_obj
+            COMMENT "Generating ${MODULE_NAME}.kpm"
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND_EXPAND_LISTS
+    )
+
+    # 添加清理规则
+    add_custom_target(clean-${MODULE_NAME}
+            COMMAND ${CMAKE_COMMAND} -E remove -f ${MODULE_NAME}.kpm
+            COMMAND ${CMAKE_COMMAND} -E remove -f *.o
+            COMMENT "Cleaning ${MODULE_NAME} files"
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
+
+    # 将清理目标添加到全局清理依赖
+    if(NOT TARGET clean-all-demos)
+        add_custom_target(clean-all-demos
+                COMMENT "Cleaning all demo files"
+        )
+    endif()
+    add_dependencies(clean-all-demos clean-${MODULE_NAME})
+endfunction()
+
+add_subdirectory(test_btf)
+
+
